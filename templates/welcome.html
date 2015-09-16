@@ -1,0 +1,15 @@
+<html>
+<head>
+    <title>Train Booking</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Train Booking Application</h1>
+        <br><a href="/login">login </a>
+        <br>click <a href="/">here </a>to go home
+    </div>
+  {% for message in get_flashed_messages() %}
+        {{message}}
+    {% endfor %}
+</body>
+</html>

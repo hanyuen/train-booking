@@ -1,0 +1,31 @@
+<html>
+<head>
+    <title>Train Booking</title>
+</head>
+<body>
+<div class="container">
+    <h1>Welcome to train booking</h1>
+        <br>
+
+{% block content%}
+<h3>Trains available</h3><br>
+    {% for train in trains %}
+        train_id: {{train.train_id}}<br>
+        from: {{train.fromCity}}<br>
+        to: {{train.toCity}}<br>
+        size: {{train.size}}<br><br>
+    {% endfor %}
+
+{% endblock %}
+
+<br>click <a href="/logout">logout</a> to logout.<br>
+
+
+    {% for message in get_flashed_messages() %}
+        {{message}}
+    {% endfor %}
+
+
+</div>
+</body>
+</html>
