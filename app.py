@@ -4,14 +4,23 @@ from flask import Flask, render_template,\
     request,redirect, url_for, session, flash, g
 from functools import wraps
 from flask_sqlalchemy import SQLAlchemy
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
-from models import *
+from database import db
+
+from models import Train
+
+
 
 app = Flask(__name__)
-app.secret_key = "hano"
+app.config.from_object("config.DevelopmentConfig")
+db.init_app(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mytrains.db'
-db = SQLAlchemy(app)
+
+def create_admin():
+    admin = Admin(app, name="TrainsBooking")
+    admin.add_view(ModelView(Train, db.session))
 
 
 def login_required(f):
@@ -57,4 +66,5 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    create_admin()
+    app.run()

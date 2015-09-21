@@ -1,6 +1,6 @@
-from app import db
+from database import db
 #from flask import Flask
-#from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 # app = Flask(__name__)
 #
@@ -8,13 +8,13 @@ from app import db
 # db = SQLAlchemy(app)
 
 class Train(db.Model):
-    _tablename__ = "trains"
+    __tablename__ = "trains"
 
-    #id = db.Column(db.Integer, primary_key=True)
-    train_id = db.Column(db.String, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    train_id = db.Column(db.String, nullable=False)
     fromCity = db.Column(db.String, nullable=False)
     toCity = db.Column(db.String, nullable=False)
-    size = db.Column(db.Integer, nullable=False)
+    size = db.Column(db.Integer, nullable=True)
 
     def __init__(self, train_id, fromCity, toCity, size):
         self.train_id = train_id
