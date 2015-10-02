@@ -1,22 +1,28 @@
 __author__ = 'hanyuen'
 
 from flask import Flask, render_template,\
-    request,redirect, url_for, session, flash, g
+    request,redirect, url_for, session, flash
 from functools import wraps
-from flask_sqlalchemy import SQLAlchemy
+
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+from flask_restless import APIManager
 
 from database import db
-
 from models import Train
-
 
 
 app = Flask(__name__)
 app.config.from_object("config.DevelopmentConfig")
-db.init_app(app)
+db.init_app(app) #this changes the app
 
+with app.app_context():
+    api_manager = APIManager(app, flask_sqlalchemy_db=db)
+   # api_manager.init_app(app) #this cannot work
+    #api_manager.create_api(Train, methods=["GET", 'POST', 'DELETE'])
+    api_manager.create_api(Train, include_columns =["id", "fromCity", "toCity"], methods=["GET", 'POST', 'PUT', 'DELETE'])
+
+#def get_trains():
 
 def create_admin():
     admin = Admin(app, name="TrainsBooking")
